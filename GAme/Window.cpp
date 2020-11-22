@@ -94,7 +94,9 @@ bool Window::broadcast() // peak the event messages from os
 	// as the App will be closed after each msg processing
 	// so here we have to call the on update method
 	window->onUpdate(); // this event method is called 
-						// to render all the graphics scene
+	Sleep(0); 	//				// to render all the graphics scene
+	// it is called, to suspend its execution temporarily for a period 
+	// of time in seconds specified by the function parameter
 	return true;
 }
 

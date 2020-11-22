@@ -3,16 +3,18 @@
 
 
 class Window
-{public:
+// this the low level window
+{	
+public:
 	Window();
 	bool init();
 	bool release();
 	bool broadcast(); // peak the event messages from os
 					  //and dispatch them into window procedure
 	// event methods
-	virtual void onCreate();
-	virtual void onUpdate();
-	virtual void onDestroy();
+	virtual void onCreate()=0;
+	virtual void onUpdate() = 0;
+	virtual void onDestroy() = 0;
 
 	~Window();
 private:
