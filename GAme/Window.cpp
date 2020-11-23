@@ -43,8 +43,9 @@ bool Window::init()
 	wc.hIcon= LoadCursor(NULL, IDI_APPLICATION);
 	wc.hIconSm= LoadCursor(NULL, IDI_APPLICATION);
 	wc.hInstance = NULL;
-	wc.lpszClassName = "MyWindowClass";
-	wc.lpszMenuName ="" ;
+	wc.lpszClassName = L"MyWindowClass"; //L requires 16-bits of 
+	//storage rather than 8-bits
+	wc.lpszMenuName =L"" ;
 	wc.style=NULL;
 	wc.lpfnWndProc = &WndProc; // handle the creation and destroy of the window
 
@@ -52,8 +53,16 @@ bool Window::init()
 	if(::RegisterClassEx(&wc))
 		return false; // for visual appreance  of window
 	                  // take pointer of WNDCLASSEX
+	
+					  
+	// setting the window pointer with our window
+	// we have to do it before the create method.
+	if (!window) // sucess if window is false
+	{
+		window = this;
+	}
 	// now we are creating the window
-	m_hwnd=::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, "Windowclass", "DirectxAPP", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 1024, 768, NULL, NULL,NULL,NULL,NULL);
+	m_hwnd=::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, L"Windowclass", L"DirectxAPP", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 1024, 768, NULL, NULL,NULL,NULL,NULL);
 	
 	//control flow
 	// if creation fials returns zero
@@ -63,12 +72,9 @@ bool Window::init()
 	::ShowWindow(m_hwnd, SW_SHOW);
 	//upadte the redraw the content of the window
 	::UpdateWindow(m_hwnd);
-	// setting the window pointer with our window
-	if (!window) // sucess if window is false
-	{
-		window = this;
-	}
 	
+	//seting the flag for runnng window
+	isrunning = true;
 	return true;
 }
 
@@ -100,6 +106,11 @@ bool Window::broadcast() // peak the event messages from os
 	return true;
 }
 
+bool Window::isRun() //only returning the Flag
+{
+	return isrunning;
+}
+
 void Window::onCreate()
 {
 }
@@ -109,7 +120,8 @@ void Window::onUpdate()
 }
 
 void Window::onDestroy()
-{
+{	
+	isrunning = false;
 }
 
 Window::~Window()
