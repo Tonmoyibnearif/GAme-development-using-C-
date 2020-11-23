@@ -62,7 +62,8 @@ bool Window::init()
 		window = this;
 	}
 	// now we are creating the window
-	m_hwnd=::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, L"Windowclass", L"DirectxAPP", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 1024, 768, NULL, NULL,NULL,NULL,NULL);
+	m_hwnd=::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, L"Windowclass",L"DirectxAPP"
+		, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1024, 768, NULL, NULL,NULL,NULL);
 	
 	//control flow
 	// if creation fials returns zero

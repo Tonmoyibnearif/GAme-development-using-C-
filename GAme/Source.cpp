@@ -3,7 +3,6 @@
 int main()	
 {
 	AppWindow App;
-	App.init();
 	//added control check for intialization
 	if (App.init())
 	{
