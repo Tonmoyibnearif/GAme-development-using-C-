@@ -40,8 +40,8 @@ bool Window::init()
 	wc.cbWndExtra = NULL;
 	wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wc.hIcon= LoadCursor(NULL, IDI_APPLICATION);
-	wc.hIconSm= LoadCursor(NULL, IDI_APPLICATION);
+	wc.hIcon= LoadIcon(NULL, IDI_APPLICATION);
+	wc.hIconSm= LoadIcon(NULL, IDI_APPLICATION);
 	wc.hInstance = NULL;
 	wc.lpszClassName = L"MyWindowClass"; //L requires 16-bits of 
 	//storage rather than 8-bits
@@ -50,20 +50,21 @@ bool Window::init()
 	wc.lpfnWndProc = &WndProc; // handle the creation and destroy of the window
 
 	// we also need to do some control flow,
-	if(::RegisterClassEx(&wc))
+	if(!::RegisterClassEx(&wc))
 		return false; // for visual appreance  of window
 	                  // take pointer of WNDCLASSEX
 	
 					  
 	// setting the window pointer with our window
 	// we have to do it before the create method.
-	if (!window) // sucess if window is false
+	
+	/*if (!window) // sucess if window is false
 	{
 		window = this;
-	}
+	}*/
 	// now we are creating the window
 	m_hwnd=::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, L"Windowclass",L"DirectxAPP"
-		, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1024, 768, NULL, NULL,NULL,NULL);
+		, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1024, 768, NULL, NULL,NULL,this);
 	
 	//control flow
 	// if creation fials returns zero
@@ -101,7 +102,7 @@ bool Window::broadcast() // peak the event messages from os
 	// as the App will be closed after each msg processing
 	// so here we have to call the on update method
 	window->onUpdate(); // this event method is called 
-	Sleep(0); 	//				// to render all the graphics scene
+	Sleep(1); 	//				// to render all the graphics scene
 	// it is called, to suspend its execution temporarily for a period 
 	// of time in seconds specified by the function parameter
 	return true;
